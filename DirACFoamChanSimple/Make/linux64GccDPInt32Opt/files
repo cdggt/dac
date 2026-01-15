@@ -1,0 +1,8 @@
+SOURCE += setRDeltaT.C
+SOURCE += moveMesh.C
+SOURCE += momentumPredictor.C
+SOURCE += thermophysicalPredictor.C
+SOURCE += correctPressure.C
+SOURCE += DirACFoamChanSimple.C
+
+LIB = $(FOAM_USER_LIBBIN)/libDirACFoamChanSimple

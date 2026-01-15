@@ -1,0 +1,8 @@
+setRDeltaT.C
+moveMesh.C
+momentumPredictor.C
+thermophysicalPredictor.C
+correctPressure.C
+DirACFoamWallReduce.C
+
+LIB = $(FOAM_USER_LIBBIN)/libDirACFoamWallReduce
