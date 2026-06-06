@@ -70,7 +70,7 @@ void Foam::solvers::DirACFoamWall::thermophysicalPredictor()
         fvm::ddt(Xl)
       + fvm::div(phi,Xl)
       ==
-        fvm::laplacian((((1-Xs-Xa)*pow(r0,2))/(8*eta))*Co*ddPdXi*(-1/(2*(1-Xs-Xa)*Xi))/(tau*tau),Xl)
+        fvm::laplacian((((1-Xs-Xa)*pow(r0,2))/(8*eta))*Co*ddPdXi*(-1/(2*(1-Xs-Xa)*Xi))/(3*tau),Xl)
       - (1 - Xs - Xa - Xl)*(rhoV/rhoL)*j
     );
 
@@ -105,7 +105,7 @@ void Foam::solvers::DirACFoamWall::thermophysicalPredictor()
         fvm::ddt(Xv)
       + fvm::div(phi,Xv)
       ==
-        fvm::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau),Xv)
+        fvm::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau),Xv)
       + j
     );
 
@@ -117,7 +117,7 @@ void Foam::solvers::DirACFoamWall::thermophysicalPredictor()
 
     fvConstraints().constrain(Xv);
 
-    
+
 
     Xi = sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa));
 

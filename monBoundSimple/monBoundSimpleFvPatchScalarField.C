@@ -150,7 +150,7 @@ void Foam::monBoundSimpleFvPatchScalarField::updateCoeffs()
 	scalar tau = tau_.value();
 	scalar Xl = Xl_.value();
 
-        mixedFvPatchScalarField::refGrad() = -((1-Xs-Xa-Xl)/tau)*(1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*(pVal);
+        mixedFvPatchScalarField::refGrad() = -((1-Xs-Xa-Xl)/(3*tau))*(1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*(pVal);
         mixedFvPatchScalarField::refValue() = (sVal);
 
         valueFraction() = (dChanStrength_);
@@ -178,7 +178,7 @@ void Foam::monBoundSimpleFvPatchScalarField::updateCoeffs()
 	scalar tau = tau_.value();
 	scalar Xl = Xl_.value();
 
-        mixedFvPatchScalarField::refGrad() = -(tau/(1-Xs-Xa-Xl))*(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa)))))*(pVal);
+        mixedFvPatchScalarField::refGrad() = -((3*tau)/(1-Xs-Xa-Xl))*(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa)))))*(pVal);
         mixedFvPatchScalarField::refValue() = (sVal);
 
         valueFraction() = (1 - dChanStrength_);

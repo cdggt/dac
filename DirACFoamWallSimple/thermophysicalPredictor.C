@@ -48,7 +48,7 @@ void Foam::solvers::DirACFoamWallSimple::thermophysicalPredictor()
         fvm::ddt(O2)
       + fvm::div(phi,O2)
       ==
-        fvm::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau),O2)
+        fvm::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau),O2)
     );
 
     O2Eqn.relax();
@@ -61,7 +61,7 @@ void Foam::solvers::DirACFoamWallSimple::thermophysicalPredictor()
 
 
 
-    volScalarField diffO2 = fvc::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau),O2);
+    volScalarField diffO2 = fvc::laplacian((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau),O2);
 
     dO2Avg = gAverage(diffO2)*runTime.deltaTValue();
     dO2Num = max(gMax(diffO2),-gMin(diffO2))*runTime.deltaTValue();

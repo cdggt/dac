@@ -150,7 +150,7 @@ void Foam::monBoundFvPatchScalarField::updateCoeffs()
 
 	scalarField Xl = mpp.fromNeighbour(patchNbr.lookupPatchField<volScalarField, scalar>("Xl"));
 
-        mixedFvPatchScalarField::refGrad() = -((1-Xs-Xa-Xl)/tau)*(1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*(pVal);
+        mixedFvPatchScalarField::refGrad() = -((1-Xs-Xa-Xl)/(3*tau))*(1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*(pVal);
         mixedFvPatchScalarField::refValue() = (sVal);
 
         valueFraction() = (dChanStrength_);
@@ -178,7 +178,7 @@ void Foam::monBoundFvPatchScalarField::updateCoeffs()
 
 	scalarField Xl = patch().lookupPatchField<volScalarField, scalar>("Xl");
 
-        mixedFvPatchScalarField::refGrad() = -(tau/(1-Xs-Xa-Xl))*(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa)))))*(pVal);
+        mixedFvPatchScalarField::refGrad() = -((3*tau)/(1-Xs-Xa-Xl))*(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa)))))*(pVal);
         mixedFvPatchScalarField::refValue() = (sVal);
 
         valueFraction() = (1 - dChanStrength_);

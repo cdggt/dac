@@ -75,7 +75,7 @@ void Foam::solvers::DirACFoamWallReduce::thermophysicalPredictor()
 
     volScalarField gam = (rhoV/rhoL)*(1 - Xs - Xa - Xl);
 
-    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(tau*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(tau*tau);
+    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(3*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(3*tau);
 
 
 
@@ -85,8 +85,8 @@ void Foam::solvers::DirACFoamWallReduce::thermophysicalPredictor()
         (1+(gam*dXvdXl))*fvm::ddt(Xl)
       + gam*dXvdT*fvc::ddt(T)
       ==
-        fvm::laplacian((((((1-Xs-Xa)*pow(r0,2))/(8*eta))*Co*ddPdXi*(-1/(2*(1-Xs-Xa)*Xi)))+(gam*dXvdXl*Dfact*D0))/(tau*tau),Xl)
-      + fvc::laplacian(gam*dXvdT*Dfact*D0/(tau*tau),T)
+        fvm::laplacian((((((1-Xs-Xa)*pow(r0,2))/(8*eta))*Co*ddPdXi*(-1/(2*(1-Xs-Xa)*Xi)))+(gam*dXvdXl*Dfact*D0))/(3*tau),Xl)
+      + fvc::laplacian(gam*dXvdT*Dfact*D0/(3*tau),T)
     );
 
     XlEqn.relax();
@@ -121,7 +121,7 @@ void Foam::solvers::DirACFoamWallReduce::thermophysicalPredictor()
 
     gam = (rhoV/rhoL)*(1 - Xs - Xa - Xl);
 
-    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(tau*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(tau*tau);
+    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(3*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(3*tau);
 
 
 
@@ -131,8 +131,8 @@ void Foam::solvers::DirACFoamWallReduce::thermophysicalPredictor()
         (cW+psi*dXvdT)*fvm::ddt(T)
       + ((CpL*rhoL*T)+(psi*dXvdXl))*fvc::ddt(Xl)
       ==
-        fvm::laplacian(KappaW+((psi*dXvdT/(tau*tau))*Dfact*D0),T)
-      + fvc::laplacian(((psi*dXvdXl/(tau*tau))*Dfact*D0),Xl)
+        fvm::laplacian(KappaW+((psi*dXvdT/(3*tau))*Dfact*D0),T)
+      + fvc::laplacian(((psi*dXvdXl/(3*tau))*Dfact*D0),Xl)
     );
 
     EEqn.relax();
@@ -167,7 +167,7 @@ void Foam::solvers::DirACFoamWallReduce::thermophysicalPredictor()
 
     gam = (rhoV/rhoL)*(1 - Xs - Xa - Xl);
 
-    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(tau*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(tau*tau);
+    j=dXvdT*fvc::ddt(T)-fvc::laplacian((dXvdT/(3*tau))*Dfact*D0,T)+dXvdXl*fvc::ddt(Xl)-fvc::laplacian(dXvdXl*Dfact*D0,Xl)/(3*tau);
 
 
 

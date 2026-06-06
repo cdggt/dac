@@ -52,7 +52,7 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
         fvm::ddt(CO2a)
       + fvm::div(phi,CO2a)
       ==
-        (alpha*neg(CO2a-cap))*fvc::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau)),CO2)
+        (alpha*neg(CO2a-cap))*fvc::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau)),CO2)
     );
 
     CO2aEqn.relax();
@@ -71,8 +71,7 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
         fvm::ddt(CO2)
       + fvm::div(phi,CO2)
       ==
-        (1-alpha*neg(CO2a-cap))*fvm::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau)),CO2)
-      //- (alpha*neg(CO2a-cap))*fvm::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau)),CO2)
+        (1-alpha*neg(CO2a-cap))*fvm::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau)),CO2)
     );
 
     CO2Eqn.relax();
@@ -98,7 +97,7 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
     dCO2aAvg = max(small,gAverage(diffCO2a)*runTime.deltaTValue());
     dCO2aNum = max(small,max(gMax(diffCO2a),-gMin(diffCO2a))*runTime.deltaTValue());
 
-    Info<< "CO2a Difference mean: " << dCO2aAvg << " max: " << dCO2aNum << endl; 
+    Info<< "CO2a Difference mean: " << dCO2aAvg << " max: " << dCO2aNum << endl;
 }
 
 
