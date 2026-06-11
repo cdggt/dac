@@ -241,14 +241,14 @@ Foam::solvers::DirACFoamWallAdsorb::DirACFoamWallAdsorb(fvMesh& mesh)
       ).lookup("Xl")
     ),
 
-    alpha_
+    cMax_
     (
-      "alpha",
+      "cMax",
       dimless,
       db().lookupObject<IOdictionary>
       (
           "physicalProperties"
-      ).lookup("alpha")
+      ).lookup("cMax")
     ),
 
     cap_
@@ -280,7 +280,7 @@ Foam::solvers::DirACFoamWallAdsorb::DirACFoamWallAdsorb(fvMesh& mesh)
     lam(lam_),
     r0(r0_),
     Xl(Xl_),
-    alpha(alpha_),
+    cMax(cMax_),
     cap(cap_)
 
 //The only part you should touch after this part is the first if statement
@@ -380,10 +380,10 @@ Foam::scalar Foam::solvers::DirACFoamWallAdsorb::maxDeltaT() const
         deltaT = min(deltaT, maxCO2Delta/dCO2Num*runTime.deltaTValue());
     }
 
-    if (maxCO2aDelta > small)
+    /*if (maxCO2aDelta > small)
     {
         deltaT = min(deltaT, maxCO2aDelta/dCO2aNum*runTime.deltaTValue());
-    }
+    }*/
 
     return deltaT;
 }

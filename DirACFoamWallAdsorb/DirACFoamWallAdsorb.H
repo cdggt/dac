@@ -145,8 +145,8 @@ protected:
         //- liquid concentration
         dimensionedScalar Xl_;
 
-        //- adsorption ratio
-        dimensionedScalar alpha_;
+        //- ambient carbon concentration
+        dimensionedScalar cMax_;
 
         //- CO2 capacity
         dimensionedScalar cap_;
@@ -270,8 +270,8 @@ public:
         //- Reference to liquid concentration
         const dimensionedScalar& Xl;
 
-        //- Reference to adsorption ratio
-        const dimensionedScalar& alpha;
+        //- Reference to ambient carbon concentration
+        const dimensionedScalar& cMax;
 
         //- Reference to CO2 capacity
         const dimensionedScalar& cap;

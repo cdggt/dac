@@ -45,7 +45,7 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
     dimensionedScalar tFix("tFix", dimTime, 1);
 
 
-
+    /*
     //Solve for vapor transport
     fvScalarMatrix CO2aEqn =
     (
@@ -62,16 +62,20 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
     CO2aEqn.solve("CO2a");
 
     fvConstraints().constrain(CO2a);
+    */
+
+
+    CO2a = (cap/cMax)*CO2;
 
 
 
     //Solve for vapor transport
     fvScalarMatrix CO2Eqn =
     (
-        fvm::ddt(CO2)
+        (1 + (cap/cMax))*fvm::ddt(CO2)
       + fvm::div(phi,CO2)
       ==
-        (1-alpha*neg(CO2a-cap))*fvm::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau)),CO2)
+        fvm::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(3*tau)),CO2)
     );
 
     CO2Eqn.relax();
@@ -84,20 +88,15 @@ void Foam::solvers::DirACFoamWallAdsorb::thermophysicalPredictor()
 
 
 
-    volScalarField diffCO2 = (1-alpha*neg(CO2a-cap))*fvc::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau)),CO2);
-    dCO2Avg = max(small,gAverage(diffCO2)*runTime.deltaTValue());
-    dCO2Num = max(small,max(gMax(diffCO2),-gMin(diffCO2))*runTime.deltaTValue());
+    CO2a = (cap/cMax)*CO2;
+
+
+
+    volScalarField diffCO2 = CO2 - CO2.oldTime();
+    dCO2Avg = max(small,gAverage(diffCO2));
+    dCO2Num = max(small,max(gMax(diffCO2),-gMin(diffCO2)));
 
     Info<< "CO2 Difference mean: " << dCO2Avg << " max: " << dCO2Num << endl;
-
-
-
-    volScalarField diffCO2a = (alpha*neg(CO2a-cap))*fvc::laplacian(((1/(1 + (lam/(r0*sqrt((1-Xs-Xa-Xl)/(1-Xs-Xa))))))*D0/(tau*tau)),CO2);
-
-    dCO2aAvg = max(small,gAverage(diffCO2a)*runTime.deltaTValue());
-    dCO2aNum = max(small,max(gMax(diffCO2a),-gMin(diffCO2a))*runTime.deltaTValue());
-
-    Info<< "CO2a Difference mean: " << dCO2aAvg << " max: " << dCO2aNum << endl;
 }
 
 
